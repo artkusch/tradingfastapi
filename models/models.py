@@ -26,3 +26,15 @@ user = Table(
     Column("is_superuser",Boolean, default=False, nullable=False),
     Column("is_verified",Boolean, default=False, nullable=False)
 )
+
+
+operation = Table(
+    "operation",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("quantity", String),
+    Column("figi", String),
+    Column("instrument_type", String, nullable=True),
+    Column("date", TIMESTAMP),
+    Column("type", String),
+)
