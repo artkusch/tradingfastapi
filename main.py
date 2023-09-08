@@ -1,6 +1,9 @@
 from typing import List
 
+from redis import asyncio as aioredis
 from fastapi import FastAPI, Depends
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
 from fastapi_users import fastapi_users, FastAPIUsers
 from pydantic import BaseModel
 
@@ -13,7 +16,7 @@ from operations.router import router as router_operation
 
 app = FastAPI(
     title="Trading App"
-)
+)ad
 
 fastapi_users = FastAPIUsers[User,int](
     get_user_manager,
@@ -34,3 +37,8 @@ app.include_router(
 
 
 app.include_router(router_operation)
+
+@app.on_event("startup")
+async def startup_event():
+    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-chache")
