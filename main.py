@@ -16,7 +16,7 @@ from operations.router import router as router_operation
 
 app = FastAPI(
     title="Trading App"
-)ad
+)
 
 fastapi_users = FastAPIUsers[User,int](
     get_user_manager,
